@@ -9,6 +9,19 @@
 @bg-dark: #444;
 @bg-light: #fff;
 
+/* ****************************** *\
+ * Mixins
+ *  ***************************** */
+
+.background-cover (){
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+}
+
+
+
 /* ***************************** *\
  * Imports
  *  **************************** */
@@ -52,7 +65,11 @@ a:focus{
 	top:1px;
 }
 
-
+img {
+	width: 100%;
+	height: auto;
+	color: #c00;
+}
 
 
 
@@ -60,17 +77,54 @@ a:focus{
  * Layout
  * ***************************** */
 
+.logo {
+	margin: 40px 2.083%;
+	float: left;
+}
+/*
+Your logo is an image, not a h1: csswizardry.com/2010/10/your-logo-is-an-image-not-a-h1/
+*/
+.logo,
+.logo img{
+	display:block;
+	width:auto; /* Width of your logo in pixels (ideally a round grid-number) */
+	height:auto; /* Height of your logo in pixels */
+	width: 100px;
+	height: 100px;
+}
+/* Based on the fact that we need to use an <img /> in our markup, let’s hide the actual image and use a background on the <a>--this gives us semantically sound markup and the ability to use sprites for hover effects! */
+.logo{
+	background:url(../img/logo.png);
+}
+	.logo:hover{
+		/* Hover states */
+		background-position:0 -100px;
+	}
+.logo img{
+	/*position:absolute;
+	left:-99999px;*/
+	opacity:0;
+	filter:alpha(opacity=0); /* Ew, IE hack */
+}
+
+
+
+
 .wrapper {
 	width: 960px;
 	margin: 0 auto;
 }
 
-.light {
+.light,
+.light .content,
+.light footer{
 	background: @bg-light;
 	color: @f-dark;
 }
 
-.dark {
+.dark,
+.dark .content,
+.dark footer{
 	background: @bg-dark;
 	color: @f-light;
 }
@@ -78,17 +132,25 @@ a:focus{
 article {
 	padding: 60px 0 60px;
 
+	header {
+		margin: 0 0 0 2.083%;
+	}
+
 	footer {
 		width: 14.583%;
 		float: left;
 		color: #aaa;
-		font-size: 0.8em;
+		font-size: 0.7em;
 		margin: 0 0 0 2.083%;
+		div {
+			padding: 10px;
+		}
 	}
 	p {
 		padding: 10px;
 	}
 }
+
 
 
 .big-bg-wide {
@@ -124,6 +186,13 @@ article {
 
 }
 
+footer {
+	padding: 40px 0;
+	background: @bg-dark;
+	color: @f-mid;
+}
+
+
 /* ***************************** *\
  * Module
  * ***************************** */
@@ -132,6 +201,7 @@ article {
 .cf,
 .grids,
 article,
+.wrapper,
 .media{
 	zoom:1;
 }
@@ -139,10 +209,12 @@ article,
 .grids:before,
 .media:before,
 article:before,
+.wrapper:before,
 
 .cf:after,
 .grids:after,
 article:after,
+.wrapper:after,
 .media:after{
 	content:"";
 	display:table;
@@ -150,6 +222,7 @@ article:after,
 .cf:after,
 .grids:after,
 article:after,
+.wrapper:after,
 .media:after{
 	clear:both;
 }
@@ -159,6 +232,29 @@ article:after,
 	margin: 0;
 }
 
+.pagination {
+	text-align: center;
+	margin-bottom: 60px;
+	padding: 10px;
+}
+.pagination a {
+	padding: 5px 10px;
+	color: @f-dark;
+}
+a.anker:hover,
+.pagination a:hover {
+	text-decoration: none;
+	color: @f-light;
+	background: @bg-dark;
+}
+
+
+
 /* ***************************** *\
  * State
  * ***************************** */
+
+/* ***************************** *\
+ * Individual Blogpost styling
+ * ***************************** */
+@import "individuals.less";
